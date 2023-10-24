@@ -17,9 +17,9 @@
         <item>5</item>
         <item>10</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome">Welcome</string>
+    <string name="label_your_points">Sua pontuação: </string>
     <string name="play">Play</string>
     <string name="points">Points</string>
+    <string name="label_restart_game">Reiniciar jogo</string>
 </resources>

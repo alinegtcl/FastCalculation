@@ -94,11 +94,17 @@ class GameFragment : Fragment() {
             roundDeadLineHandler.sendEmptyMessageDelayed(MSG_ROUND_DEADLINE, settings.roundInterval)
         } else {
             with(fragmentGameBinding) {
-                roundTv.text = getString(R.string.points)
+                // roundTv.text = getString(R.string.points)
                 val points = hits * 10f / (totalGameTime / 1000L)
                 "%.1f".format(points).also {
-                    questionTv.text = it
+                    // questionTv.text = it
                 }
+
+                // send to GameResultFragment.
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.gameFl, GameResultFragment.newInstance(points.toString()))
+                    .commit()
+
                 alternativeOneBt.visibility = View.GONE
                 alternativeTwoBt.visibility = View.GONE
                 alternativeThreeBt.visibility = View.GONE

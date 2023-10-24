@@ -6,47 +6,42 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import br.edu.scl.ifsp.sdm.fastcalculation.Extras.EXTRA_SETTINGS
-import br.edu.scl.ifsp.sdm.fastcalculation.databinding.FragmentWelcomeBinding
+import br.edu.scl.ifsp.sdm.fastcalculation.Extras.EMPTY_STRING
+import br.edu.scl.ifsp.sdm.fastcalculation.Extras.EXTRA_SCORE
+import br.edu.scl.ifsp.sdm.fastcalculation.databinding.FragmentGameResultBinding
 
-
-class WelcomeFragment : Fragment() {
-    private lateinit var fragmentWelcomeBinding: FragmentWelcomeBinding
-    private lateinit var settings: Settings
+class GameResultFragment : Fragment() {
+    private lateinit var binding: FragmentGameResultBinding
+    private lateinit var score: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            settings = it.getParcelable(EXTRA_SETTINGS) ?: Settings()
-
+            score = it.getString(EXTRA_SCORE) ?: EMPTY_STRING
         }
         setHasOptionsMenu(true)
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        fragmentWelcomeBinding = FragmentWelcomeBinding.inflate(inflater, container, false)
-        "${getString(R.string.welcome)},${settings.playerName}!".also {
-            fragmentWelcomeBinding.welcomeTv.text = it
+        binding = FragmentGameResultBinding.inflate(inflater, container, false)
+        score.also {
+            binding.textScore.text = it
         }
-        fragmentWelcomeBinding.playerBt.setOnClickListener {
+        binding.buttonRestartGame.setOnClickListener {
             (context as OnPlayGame).onPlayGame()
         }
-        return fragmentWelcomeBinding.root
+        return binding.root
     }
 
     companion object {
-
         @JvmStatic
-        fun newInstance(settings: Settings) =
-            WelcomeFragment().apply {
+        fun newInstance(score: String) =
+            GameResultFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(EXTRA_SETTINGS, settings)
-
+                    putString(EXTRA_SCORE, score)
                 }
             }
     }
@@ -55,4 +50,5 @@ class WelcomeFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.restartGameMi).isVisible = false
     }
+
 }
